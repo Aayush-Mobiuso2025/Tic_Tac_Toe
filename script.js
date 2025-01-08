@@ -1,70 +1,105 @@
-const cells = document.querySelectorAll(".cell");
-const winnerDisplay = document.getElementById("winner");
-const resetButton = document.getElementById("reset");
-
-let currentPlayer = "X";
-let board = ["", "", "", "", "", "", "", "", ""];
-let gameActive = true;
+const rows = 30; 
+const cols = 30; 
+let currentGrid = Array.from({ length: rows }, () => Array(cols).fill(0)); 
+let isRunning = false; 
+let interval; 
 
 
-const winningCombinations = [
-  [0, 1, 2],
-  [3, 4, 5],
-  [6, 7, 8],
-  [0, 3, 6],
-  [1, 4, 7],
-  [2, 5, 8],
-  [0, 4, 8],
-  [2, 4, 6]
-];
+function createGrid() {
+  const grid = document.getElementById("grid");
+  grid.style.gridTemplateColumns = `repeat(${cols}, 1fr)`;
+  grid.innerHTML = ""; 
 
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const cell = document.createElement("div");
+      cell.classList.add("cell");
+      cell.dataset.row = row;
+      cell.dataset.col = col;
 
-function handleCellClick(event) {
-  const cell = event.target;
-  const index = cell.getAttribute("data-index");
+      
+      cell.addEventListener("click", () => {
+        currentGrid[row][col] = currentGrid[row][col] === 0 ? 1 : 0;
+        cell.classList.toggle("alive", currentGrid[row][col] === 1);
+      });
 
-  if (board[index] !== "" || !gameActive) {
-    return;
+      grid.appendChild(cell);
+    }
   }
-
-  board[index] = currentPlayer;
-  cell.textContent = currentPlayer;
-  cell.classList.add("taken");
-  cell.classList.add(currentPlayer.toLowerCase()); // Add the player class ('x' or 'o')
-
-  if (checkWin()) {
-    winnerDisplay.textContent = `Player ${currentPlayer} Wins!`;
-    gameActive = false;
-    return;
-  }
-
-  if (board.every(cell => cell !== "")) {
-    winnerDisplay.textContent = "It's a Draw!";
-    gameActive = false;
-    return;
-  }
-
-  currentPlayer = currentPlayer === "X" ? "O" : "X";
 }
 
 
-function checkWin() {
-  return winningCombinations.some(combination => {
-    return combination.every(index => board[index] === currentPlayer);
+function countAliveNeighbors(row, col) {
+  let aliveCount = 0;
+  const directions = [
+    [-1, -1], [-1, 0], [-1, 1], 
+    [0, -1], [0, 1], 
+    [1, -1], [1, 0], [1, 1], 
+  ];
+
+  for (const [dx, dy] of directions) {
+    const newRow = row + dx;
+    const newCol = col + dy;
+
+    if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
+      aliveCount += currentGrid[newRow][newCol];
+    }
+  }
+
+  return aliveCount;
+}
+
+
+function getNextGrid() {
+  const nextGrid = Array.from({ length: rows }, () => Array(cols).fill(0));
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const aliveNeighbors = countAliveNeighbors(row, col);
+
+      if (currentGrid[row][col] === 1) {
+        nextGrid[row][col] = aliveNeighbors === 2 || aliveNeighbors === 3 ? 1 : 0;
+      } else {
+        nextGrid[row][col] = aliveNeighbors === 3 ? 1 : 0;
+      }
+    }
+  }
+
+  return nextGrid;
+}
+
+function updateGrid() {
+  document.querySelectorAll(".cell").forEach((cell) => {
+    const row = parseInt(cell.dataset.row);
+    const col = parseInt(cell.dataset.col);
+    cell.classList.toggle("alive", currentGrid[row][col] === 1);
   });
 }
+
+function startGame() {
+  if (isRunning) return; 
+  isRunning = true;
+
+  interval = setInterval(() => {
+    currentGrid = getNextGrid();
+    updateGrid();
+  }, 300); 
+}
+
+
+function pauseGame() {
+  isRunning = false;
+  clearInterval(interval);
+}
+
 
 function resetGame() {
-  currentPlayer = "X";
-  board = ["", "", "", "", "", "", "", "", ""];
-  gameActive = true;
-  winnerDisplay.textContent = "";
-  cells.forEach(cell => {
-    cell.textContent = "";
-    cell.classList.remove("taken", "x", "o");
-  });
+  pauseGame();
+  currentGrid = Array.from({ length: rows }, () => Array(cols).fill(0));
+  updateGrid();
 }
 
-
-cells.forEach(cell => cell.addEventListener("click", handleCellClick));
-resetButton.addEventListener("click", resetGame);
+document.getElementById("start").addEventListener("click", startGame);
+document.getElementById("pause").addEventListener("click", pauseGame);
+document.getElementById("reset").addEventListener("click", resetGame);
+createGrid();
