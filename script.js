@@ -6,7 +6,6 @@ let currentPlayer = "X";
 let board = ["", "", "", "", "", "", "", "", ""];
 let gameActive = true;
 
-
 const winningCombinations = [
   [0, 1, 2],
   [3, 4, 5],
@@ -17,7 +16,6 @@ const winningCombinations = [
   [0, 4, 8],
   [2, 4, 6]
 ];
-
 
 function handleCellClick(event) {
   const cell = event.target;
@@ -32,7 +30,7 @@ function handleCellClick(event) {
   cell.classList.add("taken");
   cell.classList.add(currentPlayer.toLowerCase()); // Add the player class ('x' or 'o')
 
-  if (checkWin()) {
+  if (checkWinner()) {
     winnerDisplay.textContent = `Player ${currentPlayer} Wins!`;
     gameActive = false;
     return;
@@ -47,8 +45,7 @@ function handleCellClick(event) {
   currentPlayer = currentPlayer === "X" ? "O" : "X";
 }
 
-
-function checkWin() {
+function checkWinner() {
   return winningCombinations.some(combination => {
     return combination.every(index => board[index] === currentPlayer);
   });
@@ -64,7 +61,6 @@ function resetGame() {
     cell.classList.remove("taken", "x", "o");
   });
 }
-
 
 cells.forEach(cell => cell.addEventListener("click", handleCellClick));
 resetButton.addEventListener("click", resetGame);
