@@ -29,7 +29,7 @@ h1 {
   text-shadow: 2px 2px 5px #000;
 }
 
-#grid {
+#gameboard {
   display: grid;
   grid-template-columns: repeat(30, 1fr); 
   gap: 1px;
