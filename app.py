@@ -4,7 +4,10 @@ from tkinter import messagebox
 class GameBoard:
     def __init__(self, size):
         self.size = size
-        self.board = [[' ' for _ in range(size)] for _ in range(size)]
+        self.reset_board()
+
+    def reset_board(self):
+        self.board = [[' ' for _ in range(self.size)] for _ in range(self.size)]
         self.ships = 0
         self.hits = 0
 
@@ -29,17 +32,18 @@ class GameBoard:
     def is_game_over(self):
         return self.hits == self.ships
 
+
 class BattleshipGame:
     def __init__(self, root):
         self.root = root
         self.root.title("Battleship Game")
-        
         self.board_size = 10
         self.board = GameBoard(self.board_size)
-        self.phase = "placing"
-        
+        self.phase = "placing"  # Either "placing" or "firing"
+        self.max_ships = 5
+        self.ships_placed = 0
         self.setup_game_interface()
-        self.update_message("Player 1: Place your ships.")
+        self.update_message("Player 1: Place your ships (5 remaining).")
 
     def setup_game_interface(self):
         self.message_label = tk.Label(self.root, text="", font=("Arial", 14))
@@ -56,17 +60,30 @@ class BattleshipGame:
         self.turn_button = tk.Button(self.root, text="Change Turn", command=self.change_turn, state=tk.DISABLED)
         self.turn_button.grid(row=self.board_size + 1, column=0, columnspan=self.board_size // 2)
 
+        self.restart_button = tk.Button(self.root, text="Restart Game", command=self.restart_game)
+        self.restart_button.grid(row=self.board_size + 1, column=self.board_size // 2, columnspan=self.board_size // 2)
+
         self.info_label = tk.Label(self.root, text="Ships Placed: 0 | Ships Hit: 0", font=("Arial", 12))
         self.info_label.grid(row=self.board_size + 2, column=0, columnspan=self.board_size)
 
     def handle_button_click(self, row, col):
         if self.phase == "placing":
             try:
-                self.board.place_ship(row, col)
-                self.update_message("Player 1: Place your ships.")
-                self.update_board()
+                if self.ships_placed < self.max_ships:
+                    self.board.place_ship(row, col)
+                    self.ships_placed += 1
+                    ships_remaining = self.max_ships - self.ships_placed
+                    self.update_message(f"Player 1: Place your ships ({ships_remaining} remaining).")
+                    self.update_board()
+
+                    if self.ships_placed == self.max_ships:
+                        self.turn_button.config(state=tk.NORMAL)
+                        self.update_message("All ships placed! Press 'Change Turn' to continue.")
+                else:
+                    self.update_message("All ships have been placed. Press 'Change Turn' to proceed.")
             except ValueError as e:
                 self.update_message(str(e))
+
         elif self.phase == "firing":
             result = self.board.fire_at(row, col)
             self.update_message(f"Player 2: {result}.")
@@ -85,6 +102,20 @@ class BattleshipGame:
             self.update_message("Player 2: Fire at Player 1's board.")
             self.turn_button.config(state=tk.DISABLED)
             self.update_board()
+
+    def restart_game(self):
+        self.board.reset_board()
+        self.phase = "placing"
+        self.ships_placed = 0
+        self.update_message("Player 1: Place your ships (5 remaining).")
+        self.update_board()
+        self.update_info()
+
+        for row in self.buttons:
+            for button in row:
+                button.config(state=tk.NORMAL, text=" ", bg="white")
+
+        self.turn_button.config(state=tk.DISABLED)
 
     def update_board(self):
         for row in range(self.board.size):
@@ -109,7 +140,7 @@ class BattleshipGame:
         self.message_label.config(text=message)
 
     def update_info(self):
-        self.info_label.config(text=f"Ships Placed: {self.board.ships} | Ships Hit: {self.board.hits}")
+        self.info_label.config(text=f"Ships Placed: {self.ships_placed} | Ships Hit: {self.board.hits}")
 
     def disable_all_buttons(self):
         for row in self.buttons:
@@ -123,4 +154,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
 
