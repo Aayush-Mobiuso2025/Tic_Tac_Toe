@@ -21,8 +21,8 @@ class GameBoard:
     def fire_at(self, row, col):
         if self.board[row][col] == 'S':
             self.board[row][col] = 'H'
-            self.hits += 1
-            return "Hit"
+            self.hits += 1  
+            return "Hit"   
         elif self.board[row][col] == ' ':
             self.board[row][col] = 'M'
             return "Miss"
@@ -33,13 +33,13 @@ class GameBoard:
         return self.hits == self.ships
 
 
-class BattleshipGame:
+class Battlefield:
     def __init__(self, root):
         self.root = root
         self.root.title("Battleship Game")
         self.board_size = 10
         self.board = GameBoard(self.board_size)
-        self.phase = "placing"  # Either "placing" or "firing"
+        self.phase = "placing"  
         self.max_ships = 5
         self.ships_placed = 0
         self.setup_game_interface()
@@ -53,11 +53,11 @@ class BattleshipGame:
         for row in range(self.board_size):
             for col in range(self.board_size):
                 button = tk.Button(self.root, text=" ", width=3, height=1,
-                                   command=lambda r=row, c=col: self.handle_button_click(r, c))
+                                   command=lambda r=row, c=col: self.perform_action_on_click(r, c))
                 button.grid(row=row + 1, column=col)
                 self.buttons[row][col] = button
 
-        self.turn_button = tk.Button(self.root, text="Change Turn", command=self.change_turn, state=tk.DISABLED)
+        self.turn_button = tk.Button(self.root, text="Change Turn", command=self.next_player_turn, state=tk.DISABLED)
         self.turn_button.grid(row=self.board_size + 1, column=0, columnspan=self.board_size // 2)
 
         self.restart_button = tk.Button(self.root, text="Restart Game", command=self.restart_game)
@@ -66,7 +66,7 @@ class BattleshipGame:
         self.info_label = tk.Label(self.root, text="Ships Placed: 0 | Ships Hit: 0", font=("Arial", 12))
         self.info_label.grid(row=self.board_size + 2, column=0, columnspan=self.board_size)
 
-    def handle_button_click(self, row, col):
+    def perform_action_on_click(self, row, col):
         if self.phase == "placing":
             try:
                 if self.ships_placed < self.max_ships:
@@ -96,7 +96,7 @@ class BattleshipGame:
 
         self.update_info()
 
-    def change_turn(self):
+    def next_player_turn(self):
         if self.phase == "placing":
             self.phase = "firing"
             self.update_message("Player 2: Fire at Player 1's board.")
@@ -149,10 +149,11 @@ class BattleshipGame:
 
 def main():
     root = tk.Tk()
-    game = BattleshipGame(root)
+    game = Battlefield(root)
     root.mainloop()
 
 if __name__ == "__main__":
     main()
+
 
 
