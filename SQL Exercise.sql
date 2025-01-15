@@ -2,6 +2,8 @@
 
 SHOW TABLES FROM sakila;
 
+DESCRIBE sakila.actor;
+
 
 
  
