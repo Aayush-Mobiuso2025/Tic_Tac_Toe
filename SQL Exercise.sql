@@ -23,6 +23,12 @@ SELECT last_name, COUNT(*) AS actor_count
 FROM sakila.actor 
 GROUP BY last_name;
 
+SELECT s.first_name, s.last_name, a.address 
+FROM sakila.staff s 
+JOIN sakila.address a 
+ON s.address_id = a.address_id;
+
+
 
 
 
