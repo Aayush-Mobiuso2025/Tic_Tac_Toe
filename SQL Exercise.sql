@@ -51,6 +51,12 @@ SELECT name
 FROM world.city 
 WHERE population BETWEEN 670000 AND 700000;
 
+SELECT name, population 
+FROM world.city 
+ORDER BY population DESC 
+LIMIT 10;
+
+
 
 
 
