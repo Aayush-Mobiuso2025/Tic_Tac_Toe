@@ -35,6 +35,9 @@ SELECT * FROM world.city LIMIT 10;
 
 SELECT * FROM world.city LIMIT 15, 5;
 
+SELECT COUNT(*) FROM world.city;
+
+
 
 
 
