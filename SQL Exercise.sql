@@ -37,6 +37,12 @@ SELECT * FROM world.city LIMIT 15, 5;
 
 SELECT COUNT(*) FROM world.city;
 
+SELECT name, population 
+FROM world.city 
+ORDER BY population DESC 
+LIMIT 1;
+
+
 
 
 
