@@ -14,6 +14,12 @@ SELECT UPPER(CONCAT(first_name, ' ', last_name)) AS `Actor Name` FROM sakila.act
 
 SELECT actor_id, first_name, last_name FROM sakila.actor WHERE first_name = 'Joe';
 
+SELECT last_name 
+FROM sakila.actor 
+GROUP BY last_name 
+HAVING COUNT(last_name) = 1;
+
+
 
 
 
