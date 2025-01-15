@@ -29,6 +29,10 @@ JOIN sakila.address a
 ON s.address_id = a.address_id;
 
 
+-- SQL practice part 1 (world database)
+
+SELECT * FROM world.city LIMIT 10;
+
 
 
 
