@@ -61,6 +61,11 @@ FROM world.city
 ORDER BY name 
 LIMIT 10;
 
+SELECT district 
+FROM world.city 
+WHERE population > 3000000 AND countrycode = 'USA';
+
+
 
 
 
