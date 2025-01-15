@@ -42,6 +42,12 @@ FROM world.city
 ORDER BY population DESC 
 LIMIT 1;
 
+SELECT name, population 
+FROM world.city 
+ORDER BY population ASC 
+LIMIT 1;
+
+
 
 
 
