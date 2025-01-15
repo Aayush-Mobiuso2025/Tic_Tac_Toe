@@ -33,6 +33,9 @@ ON s.address_id = a.address_id;
 
 SELECT * FROM world.city LIMIT 10;
 
+SELECT * FROM world.city LIMIT 15, 5;
+
+
 
 
 
