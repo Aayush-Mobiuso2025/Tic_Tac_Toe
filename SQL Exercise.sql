@@ -56,6 +56,12 @@ FROM world.city
 ORDER BY population DESC 
 LIMIT 10;
 
+SELECT name 
+FROM world.city 
+ORDER BY name 
+LIMIT 10;
+
+
 
 
 
