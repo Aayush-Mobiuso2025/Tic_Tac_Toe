@@ -19,6 +19,15 @@ FROM sakila.actor
 GROUP BY last_name 
 HAVING COUNT(last_name) = 1;
 
+SELECT last_name, COUNT(*) AS actor_count 
+FROM sakila.actor 
+GROUP BY last_name;
+
+
+
+
+
+
 
 
 
