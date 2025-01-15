@@ -47,6 +47,12 @@ FROM world.city
 ORDER BY population ASC 
 LIMIT 1;
 
+SELECT name 
+FROM world.city 
+WHERE population BETWEEN 670000 AND 700000;
+
+
+
 
 
 
