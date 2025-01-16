@@ -91,6 +91,11 @@ JOIN sakila.film ON film_category.film_id = film.film_id
 GROUP BY category.name
 HAVING average_length > 120;
 
+SELECT COUNT(*) 
+FROM sakila.inventory 
+WHERE film_id = (SELECT film_id FROM sakila.film WHERE title = 'Hunchback Impossible');
+
+
 
 
 
