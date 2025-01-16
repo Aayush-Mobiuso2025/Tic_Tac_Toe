@@ -71,13 +71,20 @@ WHERE id IN (5, 23, 432, 2021);
 
 -- SQL Exercise part 2 (sakila)
 
-SELECT a.actor_id, a.first_name, a.last_name, COUNT(fa.film_id) AS film_count 
-FROM sakila.actor a 
-JOIN sakila.film_actor fa 
-ON a.actor_id = fa.actor_id 
-GROUP BY a.actor_id 
-ORDER BY film_count DESC 
+SELECT actor.actor_id, actor.first_name, actor.last_name, COUNT(film_actor.film_id) AS film_count
+FROM sakila.actor
+JOIN sakila.film_actor ON actor.actor_id = film_actor.actor_id
+GROUP BY actor.actor_id, actor.first_name, actor.last_name
+ORDER BY film_count DESC
 LIMIT 1;
+
+SELECT category.name AS category_name, AVG(film.length) AS average_length
+FROM sakila.category
+JOIN sakila.film_category ON category.category_id = film_category.category_id
+JOIN sakila.film ON film_category.film_id = film.film_id
+GROUP BY category.name;
+
+
 
 
 
