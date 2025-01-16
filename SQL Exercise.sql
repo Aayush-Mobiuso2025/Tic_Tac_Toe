@@ -65,6 +65,11 @@ SELECT district
 FROM world.city 
 WHERE population > 3000000 AND countrycode = 'USA';
 
+SELECT id, name, population 
+FROM world.city 
+WHERE id IN (5, 23, 432, 2021);
+
+
 
 
 
