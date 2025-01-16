@@ -84,6 +84,14 @@ JOIN sakila.film_category ON category.category_id = film_category.category_id
 JOIN sakila.film ON film_category.film_id = film.film_id
 GROUP BY category.name;
 
+SELECT category.name AS category_name, AVG(film.length) AS average_length
+FROM sakila.category
+JOIN sakila.film_category ON category.category_id = film_category.category_id
+JOIN sakila.film ON film_category.film_id = film.film_id
+GROUP BY category.name
+HAVING average_length > 120;
+
+
 
 
 
