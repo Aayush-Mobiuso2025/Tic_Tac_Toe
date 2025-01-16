@@ -109,6 +109,10 @@ FROM world.country
 ORDER BY gnp DESC 
 LIMIT 2 OFFSET 1;
 
+SELECT code, name, continent, gnp 
+FROM world.country 
+WHERE name LIKE '% d%';
+
 
 
 
