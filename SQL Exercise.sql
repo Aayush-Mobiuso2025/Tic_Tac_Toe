@@ -102,7 +102,12 @@ ON sakila.customer.customer_id = sakila.payment.customer_id
 GROUP BY sakila.customer.customer_id, sakila.customer.first_name, sakila.customer.last_name
 ORDER BY sakila.customer.last_name;
 
+-- SQL exercise part 2 (world)
 
+SELECT code, name, continent, gnp 
+FROM world.country 
+ORDER BY gnp DESC 
+LIMIT 2 OFFSET 1;
 
 
 
