@@ -69,6 +69,17 @@ SELECT id, name, population
 FROM world.city 
 WHERE id IN (5, 23, 432, 2021);
 
+-- SQL Exercise part 2 (sakila)
+
+SELECT a.actor_id, a.first_name, a.last_name, COUNT(fa.film_id) AS film_count 
+FROM sakila.actor a 
+JOIN sakila.film_actor fa 
+ON a.actor_id = fa.actor_id 
+GROUP BY a.actor_id 
+ORDER BY film_count DESC 
+LIMIT 1;
+
+
 
 
 
