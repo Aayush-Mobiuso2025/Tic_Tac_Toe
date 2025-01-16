@@ -95,6 +95,14 @@ SELECT COUNT(*)
 FROM sakila.inventory 
 WHERE film_id = (SELECT film_id FROM sakila.film WHERE title = 'Hunchback Impossible');
 
+SELECT sakila.customer.first_name, sakila.customer.last_name, SUM(sakila.payment.amount) AS total_paid
+FROM sakila.customer
+JOIN sakila.payment 
+ON sakila.customer.customer_id = sakila.payment.customer_id
+GROUP BY sakila.customer.customer_id, sakila.customer.first_name, sakila.customer.last_name
+ORDER BY sakila.customer.last_name;
+
+
 
 
 
