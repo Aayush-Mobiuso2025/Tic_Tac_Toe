@@ -219,6 +219,14 @@ HAVING MAX(SALARY) > (
     FROM employees
 );
 
+SELECT DISTINCT d.DEPARTMENT_NAME, d.DEPARTMENT_ID 
+FROM departments d 
+WHERE d.DEPARTMENT_ID IN (
+    SELECT DEPARTMENT_ID 
+    FROM employees 
+    WHERE SALARY < 35000
+);
+
 
 
 
