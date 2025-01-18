@@ -203,7 +203,13 @@ INSERT INTO `employees` (`EMPLOYEE_ID`, `FIRST_NAME`, `LAST_NAME`, `EMAIL`, `PHO
 SELECT * FROM employees;
 SELECT * FROM departments;
 
-
+SELECT EMPLOYEE_ID, FIRST_NAME 
+FROM employees 
+WHERE DEPARTMENT_ID = (
+    SELECT DEPARTMENT_ID 
+    FROM departments 
+    WHERE DEPARTMENT_ID = 100
+);
 
 
 
