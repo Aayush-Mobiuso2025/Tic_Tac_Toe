@@ -45,6 +45,10 @@ FROM invoices
 WHERE Year IN ('2009', '2011') 
 GROUP BY Year;
 
+SELECT FirstName || ' ' || LastName AS FullName 
+FROM employees 
+WHERE Title = 'Sales Support Agent';
+
 
 
 
