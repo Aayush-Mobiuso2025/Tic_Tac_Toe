@@ -49,6 +49,14 @@ SELECT FirstName || ' ' || LastName AS FullName
 FROM employees 
 WHERE Title = 'Sales Support Agent';
 
+-- part 2
+
+SELECT media_types.Name, COUNT(tracks.TrackId) AS UsageCount 
+FROM media_types
+JOIN tracks ON media_types.MediaTypeId = tracks.MediaTypeId 
+GROUP BY media_types.MediaTypeId 
+ORDER BY UsageCount DESC;
+
 
 
 
