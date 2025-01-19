@@ -27,4 +27,17 @@ FROM customers
 GROUP BY customers.Country 
 ORDER BY CustomerCount DESC;
 
+SELECT customers.FirstName || ' ' || customers.LastName AS FullName, customers.CustomerId, SUM(invoices.Total) AS TotalSales 
+FROM customers
+JOIN invoices ON customers.CustomerId = invoices.CustomerId 
+GROUP BY customers.CustomerId 
+ORDER BY TotalSales DESC 
+LIMIT 5;
+
+
+
+
+
+
+
 
