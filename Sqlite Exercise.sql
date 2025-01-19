@@ -12,3 +12,6 @@ SELECT albums.Title
 FROM albums
 JOIN artists ON albums.ArtistId = artists.ArtistId 
 WHERE artists.Name LIKE '%black%';
+
+SELECT DISTINCT BillingCountry 
+FROM invoices;
