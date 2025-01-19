@@ -57,7 +57,13 @@ JOIN tracks ON media_types.MediaTypeId = tracks.MediaTypeId
 GROUP BY media_types.MediaTypeId 
 ORDER BY UsageCount DESC;
 
-
+SELECT customers.FirstName || ' ' || customers.LastName AS FullName, 
+       invoices.InvoiceId, 
+       invoices.InvoiceDate, 
+       invoices.BillingCountry 
+FROM customers
+JOIN invoices ON customers.CustomerId = invoices.CustomerId 
+WHERE customers.Country = 'Brazil';
 
 
 
