@@ -21,3 +21,10 @@ FROM invoices
 GROUP BY invoices.BillingCity 
 ORDER BY TotalInvoiceAmount DESC 
 LIMIT 1;
+
+SELECT customers.Country, COUNT(customers.CustomerId) AS CustomerCount 
+FROM customers 
+GROUP BY customers.Country 
+ORDER BY CustomerCount DESC;
+
+
