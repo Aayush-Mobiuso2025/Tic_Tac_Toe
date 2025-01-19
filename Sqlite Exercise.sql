@@ -34,6 +34,13 @@ GROUP BY customers.CustomerId
 ORDER BY TotalSales DESC 
 LIMIT 5;
 
+SELECT State, COUNT(CustomerId) AS CustomerCount 
+FROM customers 
+WHERE State IS NOT NULL 
+GROUP BY State 
+ORDER BY CustomerCount DESC;
+
+
 
 
 
