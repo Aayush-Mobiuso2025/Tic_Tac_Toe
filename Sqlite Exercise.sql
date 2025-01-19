@@ -15,3 +15,9 @@ WHERE artists.Name LIKE '%black%';
 
 SELECT DISTINCT BillingCountry 
 FROM invoices;
+
+SELECT invoices.BillingCity, SUM(invoices.Total) AS TotalInvoiceAmount 
+FROM invoices 
+GROUP BY invoices.BillingCity 
+ORDER BY TotalInvoiceAmount DESC 
+LIMIT 1;
