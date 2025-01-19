@@ -40,6 +40,11 @@ WHERE State IS NOT NULL
 GROUP BY State 
 ORDER BY CustomerCount DESC;
 
+SELECT strftime('%Y', InvoiceDate) AS Year, COUNT(InvoiceId) AS InvoiceCount 
+FROM invoices 
+WHERE Year IN ('2009', '2011') 
+GROUP BY Year;
+
 
 
 
