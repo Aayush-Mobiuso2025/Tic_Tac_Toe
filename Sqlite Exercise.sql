@@ -114,6 +114,14 @@ GROUP BY artists.ArtistId
 ORDER BY TotalEarnings DESC 
 LIMIT 10;
 
+SELECT media_types.Name AS MediaType, COUNT(invoice_items.InvoiceLineId) AS PurchaseCount 
+FROM media_types
+JOIN tracks ON media_types.MediaTypeId = tracks.MediaTypeId 
+JOIN invoice_items ON tracks.TrackId = invoice_items.TrackId 
+GROUP BY media_types.MediaTypeId 
+ORDER BY PurchaseCount DESC 
+LIMIT 1;
+
 
 
 
