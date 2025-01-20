@@ -95,4 +95,13 @@ JOIN playlist_track ON playlists.PlaylistId = playlist_track.PlaylistId
 GROUP BY playlists.PlaylistId 
 ORDER BY TrackCount DESC;
 
+SELECT tracks.Name AS TrackName, 
+       albums.Title AS AlbumName, 
+       media_types.Name AS MediaType, 
+       genres.Name AS Genre 
+FROM tracks
+JOIN albums ON tracks.AlbumId = albums.AlbumId 
+JOIN media_types ON tracks.MediaTypeId = media_types.MediaTypeId 
+JOIN genres ON tracks.GenreId = genres.GenreId;
+
 
