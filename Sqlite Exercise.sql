@@ -104,4 +104,16 @@ JOIN albums ON tracks.AlbumId = albums.AlbumId
 JOIN media_types ON tracks.MediaTypeId = media_types.MediaTypeId 
 JOIN genres ON tracks.GenreId = genres.GenreId;
 
+SELECT artists.Name AS ArtistName, 
+       SUM(invoice_items.UnitPrice * invoice_items.Quantity) AS TotalEarnings 
+FROM artists
+JOIN albums ON artists.ArtistId = albums.ArtistId 
+JOIN tracks ON albums.AlbumId = tracks.AlbumId 
+JOIN invoice_items ON tracks.TrackId = invoice_items.TrackId 
+GROUP BY artists.ArtistId 
+ORDER BY TotalEarnings DESC 
+LIMIT 10;
+
+
+
 
