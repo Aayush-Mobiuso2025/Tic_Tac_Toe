@@ -29,4 +29,15 @@ GROUP BY address.country
 HAVING COUNT(address.city) > 1
 ORDER BY city_count DESC;
 
+-- Q 9 Query to display the order_id, customer id and customer full name of customers along with (product_quantity) as total quantity of products shipped for order ids > 10060.
 
+SELECT 
+    order_header.order_id,
+    online_customer.customer_id,
+    CONCAT(online_customer.customer_fname, ' ', online_customer.customer_lname) AS customer_full_name,
+    SUM(order_items.product_quantity) AS total_quantity
+FROM online_customer
+JOIN order_header ON online_customer.customer_id = order_header.customer_id
+JOIN order_items ON order_header.order_id = order_items.order_id
+WHERE order_header.order_id > 10060
+GROUP BY order_header.order_id;
