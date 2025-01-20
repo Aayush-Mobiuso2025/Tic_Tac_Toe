@@ -83,6 +83,12 @@ GROUP BY customers.CustomerId
 ORDER BY TotalSpent DESC 
 LIMIT 1;
 
+SELECT customers.FirstName || ' ' || customers.LastName AS FullName, 
+       customers.CustomerId, 
+       customers.Country 
+FROM customers 
+WHERE customers.Country != 'USA';
+
 
 
 
