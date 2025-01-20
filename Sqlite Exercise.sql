@@ -75,7 +75,13 @@ GROUP BY artists.ArtistId
 ORDER BY TotalTracks DESC 
 LIMIT 10;
 
-
+SELECT customers.FirstName || ' ' || customers.LastName AS FullName, 
+       SUM(invoices.Total) AS TotalSpent 
+FROM customers
+JOIN invoices ON customers.CustomerId = invoices.CustomerId 
+GROUP BY customers.CustomerId 
+ORDER BY TotalSpent DESC 
+LIMIT 1;
 
 
 
