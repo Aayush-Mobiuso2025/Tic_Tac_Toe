@@ -89,6 +89,10 @@ SELECT customers.FirstName || ' ' || customers.LastName AS FullName,
 FROM customers 
 WHERE customers.Country != 'USA';
 
-
+SELECT playlists.Name AS PlaylistName, COUNT(playlist_track.TrackId) AS TrackCount 
+FROM playlists
+JOIN playlist_track ON playlists.PlaylistId = playlist_track.PlaylistId 
+GROUP BY playlists.PlaylistId 
+ORDER BY TrackCount DESC;
 
 
