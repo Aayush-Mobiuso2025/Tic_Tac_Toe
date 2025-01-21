@@ -151,3 +151,26 @@ WHERE (carton.len * carton.width * carton.height) > (
 )
 ORDER BY carton_volume ASC
 LIMIT 1;
+
+-- Q 10 a query to display product class description ,total quantity (sum(product_quantity),Total value (product_quantity * product price) and show which class of products have been shipped highest(Quantity) to countries outside India other than USA? Also show the total value of those items.
+
+SELECT 
+    product_class.product_class_desc AS product_class_description,
+    SUM(order_items.product_quantity) AS total_quantity,
+    SUM(order_items.product_quantity * product.product_price) AS total_value
+FROM product
+JOIN product_class 
+    ON product.product_class_code = product_class.product_class_code
+JOIN order_items 
+    ON product.product_id = order_items.product_id
+JOIN order_header 
+    ON order_items.order_id = order_header.order_id
+JOIN online_customer 
+    ON order_header.customer_id = online_customer.customer_id
+JOIN address 
+    ON online_customer.address_id = address.address_id
+WHERE address.country NOT IN ('India', 'USA')
+GROUP BY product_class.product_class_desc
+ORDER BY total_quantity DESC
+LIMIT 1;
+
