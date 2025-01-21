@@ -41,3 +41,16 @@ JOIN order_header ON online_customer.customer_id = order_header.customer_id
 JOIN order_items ON order_header.order_id = order_items.order_id
 WHERE order_header.order_id > 10060
 GROUP BY order_header.order_id;
+
+-- Q8 customers who bought more than 10 products.
+
+SELECT 
+    online_customer.customer_id, 
+    CONCAT(online_customer.customer_fname, ' ', online_customer.customer_lname) AS customer_full_name,
+    order_header.order_id,
+    SUM(order_items.product_quantity) AS total_quantity
+FROM online_customer
+JOIN order_header ON online_customer.customer_id = order_header.customer_id
+JOIN order_items ON order_header.order_id = order_items.order_id
+GROUP BY online_customer.customer_id, order_header.order_id
+HAVING total_quantity > 10;
