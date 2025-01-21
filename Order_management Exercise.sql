@@ -91,4 +91,19 @@ JOIN product_class ON product.product_class_code = product_class.product_class_c
 WHERE address.pincode NOT LIKE '%0%'
 ORDER BY customer_full_name, subtotal;
 
+-- 6 query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.
+
+SELECT 
+    online_customer.customer_id,
+    CONCAT(online_customer.customer_fname, ' ', online_customer.customer_lname) AS customer_full_name,
+    online_customer.customer_email,
+    order_header.order_id,
+    product.product_desc,
+    order_items.product_quantity,
+    (order_items.product_quantity * product.product_price) AS subtotal
+FROM online_customer
+LEFT JOIN order_header ON online_customer.customer_id = order_header.customer_id
+LEFT JOIN order_items ON order_header.order_id = order_items.order_id
+LEFT JOIN product ON order_items.product_id = product.product_id;
+
 
