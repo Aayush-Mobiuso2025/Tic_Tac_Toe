@@ -54,3 +54,19 @@ JOIN order_header ON online_customer.customer_id = order_header.customer_id
 JOIN order_items ON order_header.order_id = order_items.order_id
 GROUP BY online_customer.customer_id, order_header.order_id
 HAVING total_quantity > 10;
+
+-- Q 1 query to Display the product details (product_class_code, product_id, product_desc, product_price,) as per the following criteria and sort them in descending order of category: a. If the category is 2050, increase the price by 2000 b. If the category is 2051, increase the price by 500 c. If the category is 2052, increase the price by 600. 
+
+SELECT 
+    product_class_code, 
+    product_id, 
+    product_desc, 
+    product_price,
+    CASE 
+        WHEN product_class_code = 2050 THEN product_price + 2000
+        WHEN product_class_code = 2051 THEN product_price + 500
+        WHEN product_class_code = 2052 THEN product_price + 600
+        ELSE product_price
+    END AS adjusted_price
+FROM product
+ORDER BY product_class_code DESC;
