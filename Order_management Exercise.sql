@@ -106,4 +106,35 @@ LEFT JOIN order_header ON online_customer.customer_id = order_header.customer_id
 LEFT JOIN order_items ON order_header.order_id = order_items.order_id
 LEFT JOIN product ON order_items.product_id = product.product_id;
 
+-- Q 2 query to display (product_class_desc, product_id, product_desc, product_quantity_avail ) and Show inventory status of products as below as per their available quantity: a. For Electronics and Computer categories, if available quantity is <= 10, show 'Low stock', 11 <= qty <= 30, show 'In stock', >= 31, show 'Enough stock' b. For Stationery and Clothes categories, if qty <= 20, show 'Low stock', 21 <= qty <= 80, show 'In stock', >= 81, show 'Enough stock' c. Rest of the categories, if qty <= 15 – 'Low Stock', 16 <= qty <= 50 – 'In Stock', >= 51 – 'Enough stock' For all categories, if available quantity is 0, show 'Out of stock'.
+
+SELECT 
+    product_class.product_class_desc,
+    product.product_id, 
+    product.product_desc, 
+    product.product_quantity_avail,
+    CASE 
+        WHEN product.product_quantity_avail = 0 THEN 'Out of stock'
+        WHEN product_class.product_class_desc IN ('Electronics', 'Computer') THEN 
+            CASE 
+                WHEN product.product_quantity_avail <= 10 THEN 'Low stock'
+                WHEN product.product_quantity_avail BETWEEN 11 AND 30 THEN 'In stock'
+                ELSE 'Enough stock'
+            END
+        WHEN product_class.product_class_desc IN ('Stationery', 'Clothes') THEN 
+            CASE 
+                WHEN product.product_quantity_avail <= 20 THEN 'Low stock'
+                WHEN product.product_quantity_avail BETWEEN 21 AND 80 THEN 'In stock'
+                ELSE 'Enough stock'
+            END
+        ELSE 
+            CASE 
+                WHEN product.product_quantity_avail <= 15 THEN 'Low stock'
+                WHEN product.product_quantity_avail BETWEEN 16 AND 50 THEN 'In stock'
+                ELSE 'Enough stock'
+            END
+    END AS inventory_status
+FROM product
+JOIN product_class ON product.product_class_code = product_class.product_class_code;
+
 
