@@ -70,3 +70,25 @@ SELECT
     END AS adjusted_price
 FROM product
 ORDER BY product_class_code DESC;
+
+-- Q 4 query to display the customer_id,customer full name ,city,pincode,and order details (order id, product class desc, product desc, subtotal(product_quantity * product_price)) for orders shipped to cities whose pin codes do not have any 0s in them.
+
+SELECT 
+    online_customer.customer_id,
+    CONCAT(online_customer.customer_fname, ' ', online_customer.customer_lname) AS customer_full_name,
+    address.city,
+    address.pincode,
+    order_header.order_id,
+    product_class.product_class_desc,
+    product.product_desc,
+    (order_items.product_quantity * product.product_price) AS subtotal
+FROM online_customer
+JOIN address ON online_customer.address_id = address.address_id
+JOIN order_header ON online_customer.customer_id = order_header.customer_id
+JOIN order_items ON order_header.order_id = order_items.order_id
+JOIN product ON order_items.product_id = product.product_id
+JOIN product_class ON product.product_class_code = product_class.product_class_code
+WHERE address.pincode NOT LIKE '%0%'
+ORDER BY customer_full_name, subtotal;
+
+
