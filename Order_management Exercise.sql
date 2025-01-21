@@ -174,3 +174,22 @@ GROUP BY product_class.product_class_desc
 ORDER BY total_quantity DESC
 LIMIT 1;
 
+-- Q 5 Write a Query to display product id,product description,totalquantity(sum(product quantity) for an item which has been bought maximum no. of times (Quantity Wise) along with product id 201. (USE SUB-QUERY) (1 ROW) [NOTE: ORDER_ITEMS TABLE, PRODUCT TABLE]
+
+SELECT 
+    product.product_id, 
+    product.product_desc, 
+    SUM(order_items.product_quantity) AS totalquantity
+FROM order_items
+JOIN product ON order_items.product_id = product.product_id
+WHERE order_items.product_id = 201 OR order_items.product_id = (
+        SELECT order_items.product_id
+        FROM order_items
+        GROUP BY order_items.product_id
+        ORDER BY SUM(order_items.product_quantity) DESC
+        LIMIT 1
+    )
+GROUP BY product.product_id, product.product_desc;
+
+
+
