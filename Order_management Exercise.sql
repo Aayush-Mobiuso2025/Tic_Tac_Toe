@@ -89,7 +89,7 @@ JOIN order_header ON online_customer.customer_id = order_header.customer_id
 JOIN order_items ON order_header.order_id = order_items.order_id
 JOIN product ON order_items.product_id = product.product_id
 JOIN product_class ON product.product_class_code = product_class.product_class_code
-WHERE address.pincode NOT LIKE '%0%'
+WHERE address.pincode NOT LIKE '%0%' AND order_header.order_status = "shipped"
 ORDER BY customer_full_name, subtotal;
 
 -- 6 query to display the customer_id,customer name, email and order details (order id, product desc,product qty, subtotal(product_quantity * product_price)) for all customers even if they have not ordered any item.
