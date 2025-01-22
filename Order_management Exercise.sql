@@ -52,6 +52,7 @@ SELECT
 FROM online_customer
 JOIN order_header ON online_customer.customer_id = order_header.customer_id
 JOIN order_items ON order_header.order_id = order_items.order_id
+WHERE order_header.order_status = "shipped"
 GROUP BY online_customer.customer_id, order_header.order_id
 HAVING total_quantity > 10;
 
