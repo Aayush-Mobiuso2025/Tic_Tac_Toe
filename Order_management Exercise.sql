@@ -39,7 +39,7 @@ SELECT
 FROM online_customer
 JOIN order_header ON online_customer.customer_id = order_header.customer_id
 JOIN order_items ON order_header.order_id = order_items.order_id
-WHERE order_header.order_id > 10060
+WHERE order_header.order_id > 10060 AND order_header.order_status = "shipped"
 GROUP BY order_header.order_id;
 
 -- Q8 customers who bought more than 10 products.
