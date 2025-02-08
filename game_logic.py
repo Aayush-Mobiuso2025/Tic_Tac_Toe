@@ -15,3 +15,20 @@ class GameLogic:
             self.current_player = 'O' if self.current_player == 'X' else 'X'
         return None
 
+def check_winner(self):  #Check rows, columns, and diagonals for a winner.
+        for i in range(3):
+            # Check rows and columns
+            if self.board[i][0] == self.board[i][1] == self.board[i][2] and self.board[i][0]:
+                return True
+            if self.board[0][i] == self.board[1][i] == self.board[2][i] and self.board[0][i]:
+                return True
+        # Check diagonals
+        if self.board[0][0] == self.board[1][1] == self.board[2][2] and self.board[0][0]:
+            return True
+        if self.board[0][2] == self.board[1][1] == self.board[2][0] and self.board[0][2]:
+            return True
+        return False
+
+    def reset_game(self):  #Reset the board and start again with player X.
+        self.board = [[None] * 3 for _ in range(3)]
+        self.current_player = 'X'
