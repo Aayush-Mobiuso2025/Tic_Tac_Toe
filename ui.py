@@ -26,3 +26,29 @@ class TicTacToeUI:
         self.reset_button = tk.Button(self.window, text="Reset", font=('Arial', 14), bg="#E74C3C", fg="white",
                                       command=self.reset_game)
         self.reset_button.grid(row=4, column=0, columnspan=3, pady=10)
+
+
+   def on_click(self, row, col):   #Handles button clicks and updates the game board.
+        if self.buttons[row][col]['text'] == '':  # Ensure cell is empty
+            current_player = self.game.current_player  # Store player before move
+            message = self.game.make_move(row, col)  # Execute move
+            # Update button with the correct player's symbol and color
+            self.buttons[row][col].config(text=current_player, fg=("#3498DB" if current_player == 'X' else "#E74C3C"))
+
+            if message:  # If there's a winner or a draw
+                self.message_label.config(text=message)
+                messagebox.showinfo("Game Over", message)
+                self.reset_game()
+            else:
+                self.message_label.config(text=f"Player {self.game.current_player}'s turn")
+
+    def reset_game(self):   #Resets the game board and UI.
+        self.game.reset_game()
+        self.message_label.config(text="Player X's turn")
+        for row in range(3):
+            for col in range(3):
+                self.buttons[row][col].config(text='', fg="black", bg="#ECF0F1")
+
+    def run(self):
+        self.window.mainloop()
+
