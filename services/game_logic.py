@@ -15,3 +15,14 @@ class GameLogic:   #Handles game mechanics, including turns, ship placements, an
             self.ships_placed += 1
             return True
         return False
+
+    def fire_at(self, row, col):  #Handles firing logic and returns the result.
+        return self.board.fire_at(row, col)
+
+    def is_game_over(self):  #Checks if the game is over.
+        return self.board.is_game_over()
+
+    def reset_game(self):  #Resets the board and game state.
+        self.board.reset_board()
+        self.ships_placed = 0
+        self.phase = "placing"
