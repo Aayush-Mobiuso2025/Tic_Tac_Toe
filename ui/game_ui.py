@@ -92,4 +92,12 @@ class GameUI:   #Handles the graphical user interface of the Battleship Game.
                         button.config(text=" ", bg="white")  # Hide ships
 
 
+    def update_message(self, message):  #Updates the message label text.
+        self.message_label.config(text=message)
+
+    def update_ship_count(self):  #Updates the ship counter (placed & hit ships).
+        ships_placed = self.logic.ships_placed
+        ships_hit = self.logic.board.hits
+        self.info_label.config(text=f"Ships Placed: {ships_placed} | Ships Hit: {ships_hit}")
+
 
