@@ -62,3 +62,34 @@ class GameUI:   #Handles the graphical user interface of the Battleship Game.
         self.turn_button.config(state=tk.DISABLED)
         self.update_board()
 
+
+   def restart_game(self):  #Restarts the game, resetting the board and UI.
+        self.logic.reset_game()
+        self.is_player2_turn = False
+        self.update_board()
+        self.update_message(Messages.PLACE_SHIPS.format(self.logic.max_ships))
+        self.turn_button.config(state=tk.DISABLED)
+        self.update_ship_count()
+
+    def update_board(self):  #Updates button colors and text based on game state.
+        for row in range(self.logic.board_size):
+            for col in range(self.logic.board_size):
+                button = self.buttons[row][col]
+                state = self.logic.board.board[row][col]
+
+                if not self.is_player2_turn:  # Player 1's turn - ships visible
+                    if state == 'S':
+                        button.config(text="S", bg="blue")  # Show placed ships
+                    else:
+                        button.config(text=" ", bg="white")  # Empty spaces
+
+                else:  # Player 2's turn - hide Player 1's ships
+                    if state == 'H':
+                        button.config(text="H", bg="red")  # Hit
+                    elif state == 'M':
+                        button.config(text="M", bg="gray")  # Miss
+                    else:
+                        button.config(text=" ", bg="white")  # Hide ships
+
+
+
